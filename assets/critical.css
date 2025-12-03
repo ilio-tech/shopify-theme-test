@@ -115,3 +115,22 @@ body {
 .shopify-section > .full-width {
   grid-column: 1 / -1;
 }
+
+/* Task a: Add to cart 色変更 */
+
+/* 在庫あり（緑） */
+.btn-in-stock {
+  background-color: #28a745; /* 緑 */
+  color: white;
+}
+
+/* 在庫あり hover（青） */
+.btn-in-stock:hover {
+  background-color: #007bff; /* 青 */
+}
+
+/* 在庫なし（赤） */
+.btn-out-of-stock {
+  background-color: #dc3545; /* 赤 */
+  color: white;
+}

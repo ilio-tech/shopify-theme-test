@@ -36,7 +36,17 @@
 
     <input type="text" name="quantity" min="1" value="1">
 
-    <input type="submit" value="Add to cart">
+    <input 
+  type="submit" 
+  value="Add to cart"
+  class="
+    {% if product.selected_or_first_available_variant.available %}
+      btn-in-stock
+    {% else %}
+      btn-out-of-stock
+    {% endif %}
+  "
+>
     {{ form | payment_button }}
   {% endform %}
 </div>
