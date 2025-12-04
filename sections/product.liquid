@@ -21,7 +21,7 @@
   {% form 'product', product %}
     {% assign current_variant = product.selected_or_first_available_variant %}
 
-    <select name="id">
+     <select name="id">
       {% for variant in product.variants %}
         <option
           value="{{ variant.id }}"
@@ -29,6 +29,8 @@
             selected="selected"
           {% endif %}
           data-size-info="{{ variant.metafields.custom.size_info }}"
+          data-inventory="{{ variant.inventory_quantity }}"
+          data-available="{{ variant.available }}"
         >
           {{ variant.title }} - {{ variant.price | money }}
         </option>
@@ -72,9 +74,13 @@
 
     var select = form.querySelector('select[name="id"]');
     var sizeInfoEl = form.querySelector('.size-info');
-    if (!select || !sizeInfoEl) return;
+    var stockMessageEl = form.querySelector('.stock-message');
+    var addToCartBtn = form.querySelector('input[type="submit"]');
+
+    if (!select || !addToCartBtn) return;
 
     function updateSizeInfo() {
+      if (!sizeInfoEl) return;
       var selectedOption = select.options[select.selectedIndex];
       if (!selectedOption) return;
 
@@ -82,11 +88,51 @@
       sizeInfoEl.textContent = text;
     }
 
-    // サイズを切り替えたときに更新
-    select.addEventListener('change', updateSizeInfo);
+    function updateStockUI() {
+      var selectedOption = select.options[select.selectedIndex];
+      if (!selectedOption) return;
 
-    // 初期状態も念のため現在の選択に合わせておく
-    updateSizeInfo();
+      var inventory = parseInt(selectedOption.getAttribute('data-inventory') || '0', 10);
+      var availableAttr = selectedOption.getAttribute('data-available');
+      var available = (availableAttr === 'true' || availableAttr === '1');
+
+      // Add to cart ボタンの色
+      if (available && inventory > 0) {
+        addToCartBtn.classList.remove('btn-out-of-stock');
+        addToCartBtn.classList.add('btn-in-stock');
+      } else {
+        addToCartBtn.classList.remove('btn-in-stock');
+        addToCartBtn.classList.add('btn-out-of-stock');
+      }
+
+      // 在庫メッセージ
+      if (!stockMessageEl) return;
+
+      if (!available || inventory <= 0) {
+        stockMessageEl.textContent = 'Sold out';
+        stockMessageEl.classList.remove('stock-available');
+        stockMessageEl.classList.add('stock-low');
+      } else if (inventory < 5) {
+        stockMessageEl.textContent = 'Low stock';
+        stockMessageEl.classList.remove('stock-available');
+        stockMessageEl.classList.add('stock-low');
+      } else {
+        stockMessageEl.textContent = 'Available!';
+        stockMessageEl.classList.remove('stock-low');
+        stockMessageEl.classList.add('stock-available');
+      }
+    }
+
+    function handleChange() {
+      updateSizeInfo();
+      updateStockUI();
+    }
+
+    // サイズ切り替え時に両方更新
+    select.addEventListener('change', handleChange);
+
+    // 初期表示も現在の選択に合わせる
+    handleChange();
   });
 </script>
 
