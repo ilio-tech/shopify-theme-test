@@ -36,7 +36,7 @@
 
     <input type="number" name="quantity" min="1" value="1">
 
-    <input 
+     <input 
       type="submit" 
       value="Add to cart"
       class="
@@ -52,6 +52,12 @@
       <p class="stock-message stock-low">Low stock</p>
     {%- else -%}
       <p class="stock-message stock-available">Available!</p>
+    {%- endif -%}
+
+    {%- if current_variant.metafields.custom.size_info != blank -%}
+      <p class="size-info">
+        {{ current_variant.metafields.custom.size_info }}
+      </p>
     {%- endif -%}
 
     {{ form | payment_button }}

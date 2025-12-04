@@ -144,3 +144,9 @@ body {
   background-color: #dc3545; /* 赤 */
   color: white;
 }
+
+/* Task c: size metafield */
+.size-info {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}
