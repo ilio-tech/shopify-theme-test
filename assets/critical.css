@@ -129,3 +129,18 @@ body {
 .stock-available {
   color: #28a745; /* 緑 */
 }
+
+/* Task a: Add to cart button colors */
+.product-form input[type="submit"].btn-in-stock {
+  background-color: #28a745; /* 緑 */
+  color: white;
+}
+
+.product-form input[type="submit"].btn-in-stock:hover {
+  background-color: #007bff; /* 青 */
+}
+
+.product-form input[type="submit"].btn-out-of-stock {
+  background-color: #dc3545; /* 赤 */
+  color: white;
+}
