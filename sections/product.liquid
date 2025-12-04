@@ -28,6 +28,7 @@
           {% if variant == current_variant %}
             selected="selected"
           {% endif %}
+          data-size-info="{{ variant.metafields.custom.size_info }}"
         >
           {{ variant.title }} - {{ variant.price | money }}
         </option>
@@ -63,6 +64,31 @@
     {{ form | payment_button }}
   {% endform %}
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('.product-form');
+    if (!form) return;
+
+    var select = form.querySelector('select[name="id"]');
+    var sizeInfoEl = form.querySelector('.size-info');
+    if (!select || !sizeInfoEl) return;
+
+    function updateSizeInfo() {
+      var selectedOption = select.options[select.selectedIndex];
+      if (!selectedOption) return;
+
+      var text = selectedOption.getAttribute('data-size-info') || '';
+      sizeInfoEl.textContent = text;
+    }
+
+    // サイズを切り替えたときに更新
+    select.addEventListener('change', updateSizeInfo);
+
+    // 初期状態も念のため現在の選択に合わせておく
+    updateSizeInfo();
+  });
+</script>
 
 {% schema %}
 {
