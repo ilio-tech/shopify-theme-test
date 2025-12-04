@@ -115,3 +115,17 @@ body {
 .shopify-section > .full-width {
   grid-column: 1 / -1;
 }
+
+/* Task b: stock message */
+.stock-message {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.stock-low {
+  color: #dc3545; /* 赤 */
+}
+
+.stock-available {
+  color: #28a745; /* 緑 */
+}

@@ -34,9 +34,26 @@
       {% endfor %}
     </select>
 
-    <input type="text" name="quantity" min="1" value="1">
+    <input type="number" name="quantity" min="1" value="1">
 
-    <input type="submit" value="Add to cart">
+    <input 
+      type="submit" 
+      value="Add to cart"
+      class="
+        {% if current_variant.available %}
+          btn-in-stock
+        {% else %}
+          btn-out-of-stock
+        {% endif %}
+      "
+    >
+
+    {%- if current_variant.inventory_quantity < 5 -%}
+      <p class="stock-message stock-low">Low stock</p>
+    {%- else -%}
+      <p class="stock-message stock-available">Available!</p>
+    {%- endif -%}
+
     {{ form | payment_button }}
   {% endform %}
 </div>
