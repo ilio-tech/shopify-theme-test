@@ -150,3 +150,15 @@ body {
   margin-top: 0.25rem;
   font-size: 0.9rem;
 }
+
+/* Product image size調整 */
+.product-images {
+  max-width: 400px;
+  margin: 0 auto 1.5rem auto; /* 中央寄せ＋下に少し余白 */
+}
+
+.product-image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
